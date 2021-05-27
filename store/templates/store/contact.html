@@ -1,0 +1,92 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'styles/contact_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/contact_responsive.css' %}">
+
+	<!-- Contact Info -->
+
+	<div class="contact_info">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="contact_info_container d-flex flex-lg-row flex-column justify-content-between align-items-between">
+
+						<!-- Contact Item -->
+						<div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
+							<div class="contact_info_image"><img src="{% static 'images/contact_1.png' %}" alt=""></div>
+							<div class="contact_info_content">
+								<div class="contact_info_title">Điện thoại</div>
+								<div class="contact_info_text">+0968 346 807</div>
+							</div>
+						</div>
+
+						<!-- Contact Item -->
+						<div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
+							<div class="contact_info_image"><img src="{% static 'images/contact_2.png' %}" alt=""></div>
+							<div class="contact_info_content">
+								<div class="contact_info_title">Email</div>
+								<div class="contact_info_text">jultqd99@gmail.com</div>
+							</div>
+						</div>
+
+						<!-- Contact Item -->
+						<div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
+							<div class="contact_info_image"><img src="{% static 'images/contact_3.png' %}" alt=""></div>
+							<div class="contact_info_content">
+								<div class="contact_info_title">Địa chỉ</div>
+								<div class="contact_info_text">20 Tăng Nhơn Phú, phường Phước Long B, Quận 9, TP.HCM</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Contact Form -->
+	<div class="contact_form">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="contact_form_container">
+						<div class="contact_form_title">Gửi liên hệ cho chúng tôi</div>
+
+						<form action="{% url 'contact' %}" id="contact_form" method="post">
+							{% csrf_token %}
+							<div class="contact_form_inputs d-flex flex-md-row flex-column justify-content-between align-items-between">
+								{{ contact.full_name }}
+								{{ contact.email }}
+								{{ contact.phone }}
+							</div>
+							<div class="contact_form_text">
+								{{ contact.message }}
+							</div>
+							<div class="contact_form_button">
+								<button type="submit" class="button contact_submit_button">Gửi</button>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel"></div>
+	</div>
+
+	<!-- Map -->
+
+	<div class="contact_map">
+		<div id="google_map" class="google_map">
+			<div class="map_container">
+				<div id="map">
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.7516950361787!2d106.77279011526052!3d10.83030456115733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752701a34a5d5f%3A0x30056b2fdf668565!2zVHLGsOG7nW5nIENhbyDEkOG6s25nIEPDtG5nIFRoxrDGoW5nIFRQLkhDTQ!5e0!3m2!1svi!2s!4v1590809617343!5m2!1svi!2s" width="1900" height="430" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% endblock content %}

@@ -1,0 +1,82 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Sửa menu
+{% endblock title %}
+
+{% block content %}
+<form action="{% url 'admin:menu_update' menu.id %}" method="post">
+    {% csrf_token %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Sửa menu</a>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-success" type="submit"><i class="fa fa-save" aria-hidden="true"></i> Lưu</button>
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:menus' %}"><i class="fa fa-times" aria-hidden="true"></i> Thoát</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content mx-4" style="margin-top:90px;">
+        {% include 'store/messages.html' %}
+        <div class="card p-2 w-50" >
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Tên menu</label>
+                        <input type="text" name="name" class="form-control w-50" value="{{ menu.name }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Liên kết</label>
+                        <input type="text" name="link" class="form-control w-50" value="{{ menu.link }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cấp cha</label>
+                        <select class="form-control h-100 w-25" name="parent-id">
+                            {% if not menu.parent_id.name %}
+                                <option value="">Không có</option>
+                            {% else %}
+                                <option value="{{ menu.parent_id.id }}">{{ menu.parent_id.name }}</option>
+                                <option value="">Không có</option>
+                            {% endif %}
+                            {% for menu in menus %}
+                                <option value="{{ menu.id }}">{{ menu.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sắp xếp(Đứng sau )</label>
+                        <select class="form-control h-100 w-25" name="order">
+                            {% if not order.name %}
+                                <option value="{{ menu.order }}">Đứng đầu</option>
+                            {% else %}
+                                <option value="{{ order.order }}">{{ order.name }}</option>
+                                <option value="0">Đứng đầu</option>
+                            {% endif %}
+                            {% for menu in menus %}
+                                <option value="{{ menu.order }}">{{ menu.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        <select class="form-control h-100 w-25" name="status">
+                            {% if menu.status == 1 %}
+                                <option value="1">Xuất bản</option>
+                                <option value="2">Chưa xuất bản</option>
+                            {% else %}
+                                <option value="2">Chưa xuất bản</option>
+                                <option value="1">Xuất bản</option>
+                            {% endif %}
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}

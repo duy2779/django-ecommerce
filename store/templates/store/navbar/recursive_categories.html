@@ -1,0 +1,13 @@
+<li class="hassubs">
+    <a href="{% url 'shop:category_view' cat.slug %}">{{ cat.name }}<i class="fas"></i></a>
+    <ul>
+        {% if cat.children %}
+            {% for child in cat.children.all %}
+                {% with cat=child template_name="store/navbar/recursive_categories.html" %}
+                    {% include template_name %}
+                {% endwith %}
+            {% endfor %}
+        {% endif %}
+    </ul>
+</li>
+

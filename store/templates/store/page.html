@@ -1,0 +1,25 @@
+{% extends 'store/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'styles/regular_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/regular_responsive.css' %}">
+	<!-- Single Blog Post -->
+
+	<div class="single_post">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2">
+					<div class="single_post_title">{{page.title}}</div>
+					<div class="single_post_text">
+						<p>{{page.detail}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock content %}

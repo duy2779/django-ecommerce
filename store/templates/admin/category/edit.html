@@ -1,0 +1,76 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Sửa loại sản phẩm
+{% endblock title %}
+
+{% block content %}
+<form action="{% url 'admin:category_update' category.slug %}" method="post">
+    {% csrf_token %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Sửa loại sản phẩm</a>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-success" type="submit"><i class="fa fa-save" aria-hidden="true"></i> Lưu</button>
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:categories' %}"><i class="fa fa-times" aria-hidden="true"></i> Thoát</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content mx-4" style="margin-top:90px;">
+        {% include 'store/messages.html' %}
+        <div class="card p-2 w-50" >
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Tên loại sản phẩm</label>
+                        <input type="text" name="name" class="form-control w-50" value="{{ category.name }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cấp cha</label>
+                        <select class="form-control h-100 w-25" name="parent-id">
+                            {% if not category.parent_id.name %}
+                                <option value="">Không có</option>
+                            {% else %}
+                                <option value="{{ category.parent_id.id }}">{{ category.parent_id.name }}</option>
+                            {% endif %}
+                            {% for cat in categories %}
+                                <option value="{{ cat.id }}">{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sắp xếp(Đứng sau )</label>
+                        <select class="form-control h-100 w-25" name="order">
+                            {% if not order.name %}
+                                <option value="{{ category.order }}">Đứng đầu</option>
+                            {% else %}
+                                <option value="{{ category.order }}">{{ order.name }}</option>
+                            {% endif %}
+                            {% for cat in categories %}
+                                <option value="{{ cat.order }}">{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        <select class="form-control h-100 w-25" name="status">
+                            {% if category.status == 1 %}
+                                <option value="1">Xuất bản</option>
+                                <option value="2">Chưa xuất bản</option>
+                            {% else %}
+                                <option value="2">Chưa xuất bản</option>
+                                <option value="1">Xuất bản</option>
+                            {% endif %}
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}

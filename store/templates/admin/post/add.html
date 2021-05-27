@@ -1,0 +1,79 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Thêm bài viết
+{% endblock title %}
+
+{% block content %}
+<form action="{% url 'admin:post_add' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Thêm bài viết</a>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-success" type="submit"><i class="fa fa-save" aria-hidden="true"></i> Thêm</button>
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:posts' %}"><i class="fa fa-times" aria-hidden="true"></i> Thoát</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content mx-4" style="margin-top:90px;">
+        {% include 'store/messages.html' %}
+        <div class="card p-2" >
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label>Tiêu đề</label>
+                        <input type="text" name="title" class="form-control w-50" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Chi tiết</label>
+                        <textarea class="form-control h-100" name="detail" rows="3" style="min-height:290px;"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Loại bài viết</label>
+                        <select class="form-control h-100" name="type" onchange="typeCheck(this)">
+                            <option value="post">Bài viết</option>
+                            <option value="page">Trang đơn</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="topics" style="display: block;">
+                        <label>Chủ đề</label>
+                        <select class="form-control" name="topic">
+                            {% for topic in topics %}
+                                <option value="{{ topic.id }}">{{ topic.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        <select class="form-control h-100" name="status">
+                            <option value="2">Chưa xuất bản</option>
+                            <option value="1">Xuất bản</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ảnh</label>
+                        <input name="image" type="file" id="file" size="40" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    function typeCheck(that){
+        if(that.value=='post'){
+            document.getElementById('topics').style.display = "block";
+            console.log('post')
+        }else{
+            document.getElementById('topics').style.display = "none";
+            console.log('page')
+        }
+    }
+</script>
+{% endblock content %}

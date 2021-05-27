@@ -1,0 +1,24 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/regular_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/regular_responsive.css' %}">
+    <div class="container my-3 mb-5">
+
+        <div class="card mx-4" style="margin-top:90px;">
+            <div class="card-header">
+                Bạn có chắc muốn hủy đơn hàng <b>"{{ order.code }}"</b>
+            </div>
+            <div class="card-body">
+                <form action="{% url 'account:order_cancel' order.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Có" class="btn btn-sm btn-danger" />
+                        <a class=" btn btn-sm btn-success" href="{% url 'account:order' %}"> Thoát</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

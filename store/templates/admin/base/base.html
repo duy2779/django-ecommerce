@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>{% block title %} {% endblock title %}</title>
+    <meta charset="utf-8">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/apple-icon.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.png' %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport">
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/paper-dashboard.css' %}">
+    <!-- Script Files -->
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/jquery-3.0.0.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/paper-dashboard.min.js' %}"></script>
+    
+</head>
+<body class="">
+    <div class="wrapper" style="background-color: #f4f3ef;">
+        <div class="sidebar" data-color="white" data-active-color="danger">
+            <div class="logo">
+                <a href="" class="simple-text logo-normal ml-5">
+                    DMOBILE
+                </a>
+            </div>
+            <div class="sidebar-wrapper ps-container ps-theme-default ps-active-x ps-active-y" data-ps-id="855055b5-82af-1cf9-3145-6c6f2f137e81">
+                <ul class="nav">
+                    <li class="active ">
+                        <a href="{% url 'admin:dashboard' %}">
+                            <i class="fa fa-tachometer" aria-hidden="true"></i>
+                            <p>Bảng điều khiển</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'admin:categories' %}">
+                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                            <p>Loại sản phẩm</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'admin:menus' %}">
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                            <p>Menu</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'admin:products' %}">
+                            <i class="fa fa-product-hunt" aria-hidden="true"></i>
+                            <p>Sản phẩm</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'admin:topics' %}">
+                            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+                            <p>Chủ đề</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'admin:posts' %}">
+                            <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                            <p>Bài viết</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'admin:customers' %}">
+                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                            <p>Khách hàng</p>
+                        </a>
+                    </li>
+                    
+                    {% if request.user.is_superuser == 1 %}
+                        <li>
+                            <a href="{% url 'admin:staffs' %}">
+                                <i class="fa fa-male" aria-hidden="true"></i>
+                                <p>Nhân viên</p>
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{% url 'admin:contacts' %}">
+                            <i class="fa fa-envelope-o" aria-hidden="true"></i></i>
+                            <p>Liên hệ</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'admin:orders' %}">
+                            <i class="fa fa-shopping-bag" aria-hidden="true"></i></i>
+                            <p>Đơn hàng</p>
+                        </a>
+                    </li>
+                </ul>
+                <div class="ps-scrollbar-x-rail" style="width: 260px; left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 258px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; height: 501px; right: 0px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 473px;"></div></div>
+            </div>
+        </div>
+        <div class="main-panel ps-container ps-theme-default" data-ps-id="98ff3fd8-b43e-ea7a-b970-0991f9a1c781">
+
+            {% block content %}
+                
+            {% endblock content %}
+
+            <footer class="footer footer-black  footer-white ">
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="credits ml-auto">
+                            <span class="copyright">
+                                ©
+                                <script>
+                                    document.write(new Date().getFullYear())
+                                </script> made with <i class="fa fa-heart heart"></i> by Trần Quốc Duy
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 0px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div>
+        </div>
+    </div>
+</body>
+</html>

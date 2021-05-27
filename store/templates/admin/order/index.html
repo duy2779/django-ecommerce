@@ -1,0 +1,91 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Đơn hàng
+{% endblock title %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Quản lí Đơn Hàng</a>
+            </div>
+            <div>
+                <a class=" btn btn-sm btn-success" href="{% url 'admin:orders_complete' %}"><i class="fa fa-check" aria-hidden="true"></i> Đơn hàng đã hoàn thành</a>
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        {% include 'store/messages.html' %}
+        <div class="card">
+            <div class="table">
+                <table class="table">
+                    <thead class=" text-primary text-center">
+                        <tr>
+                            <th>
+                                Mã đơn hàng
+                            </th>
+                            <th>
+                                Khách hàng
+                            </th>
+                            <th>
+                                Địa chỉ
+                            </th>
+                            <th>
+                                Phương thức thanh toán
+                            </th>
+                            <th>
+                                Ngày tạo
+                            </th>
+                            <th>
+                                Ngày xuất kho
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for order in orders %}
+                            <tr>
+                                <td>
+                                    {{ order.code }}
+                                </td>
+                                <td>
+                                    {{ order.customer.name }}
+                                </td>
+                                <td>
+                                    {{ order.delivery_address }}
+                                </td>
+                                <td>
+                                    
+                                    {% if order.payment_method == 0 %}
+                                        Thẻ tín dụng
+                                    {% else %}
+                                        Thanh toán khi nhận hàng
+                                    {% endif %}
+                                        
+                                </td>
+                                <td>
+                                    {{ order.created_date }}
+                                </td>
+                                <td>
+                                    {{ order.export_date }}
+                                </td>
+                                <td>
+                                    Chờ nhận
+                                </td>
+                                <td>
+                                    <a class=" btn btn-sm btn-success" href="{% url 'admin:order_status' order.id %}"><i class="fa fa-check" aria-hidden="true"></i></a>
+                                    <a class=" btn btn-sm btn-info" href="{% url 'admin:order_detail' order.id %}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

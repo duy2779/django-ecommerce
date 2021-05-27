@@ -1,0 +1,69 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Sửa bài viết
+{% endblock title %}
+
+{% block content %}
+<form action="{% url 'admin:post_update' post.slug %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Sửa bài viết</a>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-success" type="submit"><i class="fa fa-save" aria-hidden="true"></i> Lưu</button>
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:posts' %}"><i class="fa fa-times" aria-hidden="true"></i> Thoát</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content mx-4" style="margin-top:90px;">
+        {% include 'store/messages.html' %}
+        <div class="card p-2" >
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label>Tiêu đề</label>
+                        <input type="text" name="title" class="form-control w-50" value="{{ post.title }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Chi tiết</label>
+                        <textarea class="form-control h-100" name="detail" rows="3" style="min-height:290px;">{{ post.detail }}</textarea>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    {% if post.type == 'post' %}
+                        <div class="form-group" id="topics">
+                            <label>Chủ đề</label>
+                            <select class="form-control" name="topic">
+                                <option value="{{ post.topic.id }}">{{ post.topic.name }}</option>
+                                {% for topic in topics %}
+                                    <option value="{{ topic.id }}">{{ topic.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        <select class="form-control h-100" name="status">
+                            {% if post.status == 1 %}
+                                <option value="1">Xuất bản</option>
+                                <option value="2">Chưa xuất bản</option>
+                            {% else %}
+                                <option value="2">Chưa xuất bản</option>
+                                <option value="1">Xuất bản</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ảnh</label>
+                        <input name="image" type="file" id="file" size="40" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}

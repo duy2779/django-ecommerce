@@ -1,0 +1,78 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Khách hàng
+{% endblock title %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Danh sách khách hàng</a>
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        {% include 'store/messages.html' %}
+        <div class="card">
+            <div class="table">
+                <table class="table">
+                    <thead class=" text-primary text-center">
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tên khách hàng
+                            </th>
+                            <th>
+                                Số điện thoại
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Loại khách hàng
+                            </th>
+                            <th>
+                                Tổng đơn hàng đã hoàn thành
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for customer in customers %}
+                            <tr>
+                                <td>
+                                    {{ customer.id }}
+                                </td>
+                                <td>
+                                    {{ customer.name }}
+                                </td>
+                                <td>
+                                    {{ customer.phone }}
+                                </td>
+                                <td>
+                                    {{ customer.email }}
+                                </td>
+                                <td>
+                                    
+                                    {% if not customer.user %}
+                                        Viếng thăm
+                                    {% else %}
+                                        Thành viên
+                                    {% endif %}
+                                        
+                                </td>
+                                <td>
+                                    {{ customer.get_order_done }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    
+{% endblock content %}

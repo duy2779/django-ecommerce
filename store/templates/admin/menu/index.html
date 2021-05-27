@@ -1,0 +1,195 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Menu
+{% endblock title %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Quản lí menu</a>
+            </div>
+            <div>
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:menus_trash' %}"><i class="fa fa-trash-o" aria-hidden="true"></i> Thùng rác</a>
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        {% include 'store/messages.html' %}
+        <div class="row">
+            <div class="card col-md-9">
+                <div class="table ">
+                    <table class="table">
+                        <thead class=" text-primary text-center">
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Tên menu
+                                </th>
+                                <th>
+                                    Loại menu
+                                </th>
+                                <th>
+                                    Cấp cha
+                                </th>
+                                <th>
+                                    Ngày tạo
+                                </th>
+                                <th>
+                                    Trạng thái
+                                </th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            {% for menu in menus %}
+                            <tr>
+                                <td>
+                                    {{ menu.id }}
+                                </td>
+                                <td>
+                                    {{ menu.name }}
+                                </td>
+                                <td>
+                                    {{ menu.type }}
+                                </td>
+                                <td>
+                                    {{ menu.parent_id.name }}
+                                </td>
+                                <td>
+                                    {{ menu.created_at }}
+                                </td>
+                                <td>
+
+                                    {% if menu.status == 1 %}
+                                        Xuất bản
+                                    {% else %}
+                                        Chưa xuất bản
+                                    {% endif %}
+
+                                </td>
+                                <td>
+
+                                    {% if menu.status == 1 %}
+
+                                        <a class=" btn btn-sm btn-success" href="{% url 'admin:menu_status' menu.id %}"><i class="fa fa-toggle-on" aria-hidden="true"></i></a>
+
+                                    {% else %}
+                                        <a class=" btn btn-sm btn-danger" href="{% url 'admin:menu_status' menu.id %}"><i class="fa fa-toggle-off" aria-hidden="true"></i></a>
+
+                                    {% endif %}
+                                    <a class=" btn btn-sm btn-info" href="{% url 'admin:menu_update' menu.id %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                    <a class=" btn btn-sm btn-danger" href="{% url 'admin:menu_deltrash' menu.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h4 class="mt-0">Thành phần menu</h4>
+                <form action="{% url 'admin:menus' %}" method="post">
+                    {% csrf_token %}
+                    <div id="accordion">
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="card-link text" data-toggle="collapse" href="#collapseOne">
+                                    Loại sản phẩm
+                                </a>
+                            </div>
+                            <div id="collapseOne" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+
+                                    {% for cat in categories %}
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" name="itemCat" value="{{ cat.id }}">
+                                                {{ cat.name }}
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                    <input name="add-cat" class="btn btn-success btn-sm" type="submit" value="Lưu" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                                    Chủ đề
+                                </a>
+                            </div>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    {% for top in topics %}
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" name="itemTop" value="{{ top.id }}">
+                                                {{ top.name }}
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                    <input name="add-top" class="btn btn-success btn-sm" type="submit" value="Lưu" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+                                    Trang đơn
+                                </a>
+                            </div>
+                            <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    {% for page in pages %}
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" name="itemPage" value="{{ page.id }}">
+                                                {{ page.title }}
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                    <input name="add-page" class="btn btn-success btn-sm" type="submit" value="Lưu" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
+                                    Tùy chọn
+                                </a>
+                            </div>
+                            <div id="collapseFour" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <fieldset class="form-group">
+                                        <label>Tên menu</label>
+                                        <input type="text" name="name" class="form-control" placeholder="Nhập tên menu">
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <label>Liên kết</label>
+                                        <input type="text" name="link" class="form-control" placeholder="Nhập liên kết">
+                                    </fieldset>
+                                    <input name="add-custom" class="btn btn-success btn-sm" type="submit" value="Lưu" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}

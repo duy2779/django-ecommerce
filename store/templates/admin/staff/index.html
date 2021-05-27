@@ -1,0 +1,69 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Nhân viên
+{% endblock title %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Quản lí nhân viên</a>
+            </div>
+            <div>
+                <a class=" btn btn-sm btn-success" href="{% url 'admin:staff_add' %}"><i class="fa fa-plus" aria-hidden="true"></i> Thêm nhân viên</a>
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        {% include 'store/messages.html' %}
+        <div class="card">
+            <div class="table">
+                <table class="table">
+                    <thead class=" text-primary text-center">
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tên nhân viên
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Ngày tạo
+                            </th>
+                            <th>
+                                Chức năng
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for staff in staffs %}
+                            <tr>
+                                <td>
+                                    {{ staff.id }}
+                                </td>
+                                <td>
+                                    {{ staff.first_name }}
+                                </td>
+                                <td>
+                                    {{ staff.email }}
+                                </td>
+                                <td>
+                                    {{ staff.date_joined }}
+                                </td>
+                                <td>
+                                    <a class=" btn btn-sm btn-danger" href="{% url 'admin:staff_delete' staff.id%}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    
+{% endblock content %}

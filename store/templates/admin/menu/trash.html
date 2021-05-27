@@ -1,0 +1,80 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Thùng rác menu
+{% endblock title %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Quản lí thùng rác menu</a>
+            </div>
+            <div>
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:menus' %}"><i class="fa fa-times" aria-hidden="true"></i> Thoát</a>
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        {% include 'store/messages.html' %}
+        <div class="card">
+            <div class="table">
+                <table class="table">
+                    <thead class=" text-primary text-center">
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tên menu
+                            </th>
+                            <th>
+                                Loại menu
+                            </th>
+                            <th>
+                                Cấp cha
+                            </th>
+                            <th>
+                                Ngày tạo
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for menu in menus %}
+                            <tr>
+                                <td>
+                                    {{ menu.id }}
+                                </td>
+                                <td>
+                                    {{ menu.name }}
+                                </td>
+                                <td>
+                                    {{ menu.type }}
+                                </td>
+                                <td>
+                                    {{ menu.parent_id.name }}
+                                </td>
+                                <td>
+                                    {{ menu.created_at }}
+                                </td>
+                                <td>
+                                    Thùng rác
+                                </td>
+                                <td>
+                                    <a class=" btn btn-sm btn-success" href="{% url 'admin:menu_retrash' menu.id %}"><i class="fa fa-recycle" aria-hidden="true"></i></a>
+                                    <a class=" btn btn-sm btn-danger" href="{% url 'admin:menu_delete' menu.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Xóa menu
+{% endblock title %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+    <div class="container-fluid">
+        <div class="navbar-wrapper">
+            <a class="navbar-brand">Xóa menu</a>
+        </div>
+    </div>
+</nav>
+
+<div class="card mx-4" style="margin-top:90px;">
+    <div class="card-header">
+        Bạn có chắc muốn xóa menu <b>"{{ menu.name }}"</b>
+    </div>
+    <div class="card-body">
+        <form action="{% url 'admin:menu_delete' menu.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-actions no-color">
+                <input type="submit" value="Xóa" class="btn btn-sm btn-danger" />
+                <a class=" btn btn-sm btn-success" href="{% url 'admin:menus_trash' %}"> Thoát</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

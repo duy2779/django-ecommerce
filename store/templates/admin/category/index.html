@@ -1,0 +1,96 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Loại sản phẩm
+{% endblock title %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Quản lí loại sản phẩm</a>
+            </div>
+            <div>
+                <a class=" btn btn-sm btn-success" href="{% url 'admin:category_add' %}"><i class="fa fa-plus" aria-hidden="true"></i> Thêm</a>
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:categories_trash' %}"><i class="fa fa-trash-o" aria-hidden="true"></i> Thùng rác</a>
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        {% include 'store/messages.html' %}
+        <div class="card">
+            <div class="table">
+                <table class="table">
+                    <thead class=" text-primary text-center">
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tên loại sản phẩm
+                            </th>
+                            <th>
+                                Cấp cha
+                            </th>
+                            <th>
+                                Thứ tự
+                            </th>
+                            <th>
+                                Ngày tạo
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for category in categories %}
+                            <tr>
+                                <td>
+                                    {{ category.id }}
+                                </td>
+                                <td>
+                                    {{ category.name }}
+                                </td>
+                                <td>
+                                    {{ category.parent_id.name }}
+                                </td>
+                                <td>
+                                    {{ category.order }}
+                                </td>
+                                <td>
+                                    {{ category.created_at }}
+                                </td>
+                                <td>
+
+                                    {% if category.status == 1 %}
+                                        Xuất bản
+                                    {% else %}
+                                        Chưa xuất bản
+                                    {% endif %}
+
+                                </td>
+                                <td>
+
+                                    {% if category.status == 1 %}
+
+                                        <a class=" btn btn-sm btn-success" href="{% url 'admin:category_status' category.id %}"><i class="fa fa-toggle-on" aria-hidden="true"></i></a>
+
+                                    {% else %}
+                                        <a class=" btn btn-sm btn-danger" href="{% url 'admin:category_status' category.id %}"><i class="fa fa-toggle-off" aria-hidden="true"></i></a>
+
+                                    {% endif %}
+                                    <a class=" btn btn-sm btn-info" href="{% url 'admin:category_update' category.slug %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                    <a class=" btn btn-sm btn-danger" href="{% url 'admin:category_deltrash' category.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    
+{% endblock content %}

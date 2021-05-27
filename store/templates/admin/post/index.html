@@ -1,0 +1,102 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Bài viết
+{% endblock title %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Quản lí bài viết</a>
+            </div>
+            <div>
+                <a class=" btn btn-sm btn-success" href="{% url 'admin:post_add' %}"><i class="fa fa-plus" aria-hidden="true"></i> Thêm</a>
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:posts_trash' %}"><i class="fa fa-trash-o" aria-hidden="true"></i> Thùng rác</a>
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        {% include 'store/messages.html' %}
+        <div class="card">
+            <div class="table">
+                <table class="table">
+                    <thead class=" text-primary text-center">
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tiêu đề
+                            </th>
+                            <th>
+                                Hình ảnh
+                            </th>
+                            <th>
+                                Loại
+                            </th>
+                            <th>
+                                Chủ đề
+                            </th>
+                            <th>
+                                Ngày tạo
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for post in posts %}
+                            <tr>
+                                <td>
+                                    {{ post.id }}
+                                </td>
+                                <td>
+                                    {{ post.title }}
+                                </td>
+                                <td>
+                                    <img style="width:100px;" src="{{ post.imageURL }}" />
+                                </td>
+                                <td>
+                                    {{ post.type }}
+                                </td>
+                                <td>
+                                    {{ post.topic.name }}
+                                </td>
+                                <td>
+                                    {{ post.created_at }}
+                                </td>
+                                <td>
+
+                                    {% if post.status == 1 %}
+                                        Xuất bản
+                                    {% else %}
+                                        Chưa xuất bản
+                                    {% endif %}
+
+                                </td>
+                                <td>
+
+                                    {% if post.status == 1 %}
+
+                                        <a class=" btn btn-sm btn-success" href="{% url 'admin:post_status' post.id %}"><i class="fa fa-toggle-on" aria-hidden="true"></i></a>
+
+                                    {% else %}
+                                        <a class=" btn btn-sm btn-danger" href="{% url 'admin:post_status' post.id %}"><i class="fa fa-toggle-off" aria-hidden="true"></i></a>
+
+                                    {% endif %}
+                                    <a class=" btn btn-sm btn-info" href="{% url 'admin:post_update' post.slug %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                    <a class=" btn btn-sm btn-danger" href="{% url 'admin:post_deltrash' post.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    
+{% endblock content %}

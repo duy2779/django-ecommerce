@@ -1,0 +1,62 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Thêm chủ đề
+{% endblock title %}
+
+{% block content %}
+<form action="{% url 'admin:topic_update' topic.slug %}" method="post">
+    {% csrf_token %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Thêm chủ đề</a>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-success" type="submit"><i class="fa fa-save" aria-hidden="true"></i> Thêm</button>
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:topics' %}"><i class="fa fa-times" aria-hidden="true"></i> Thoát</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content mx-4" style="margin-top:90px;">
+        {% include 'store/messages.html' %}
+        <div class="card p-2 w-50" >
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Tên chủ đề</label>
+                        <input type="text" name="name" class="form-control w-50" value="{{ topic.name }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cấp cha</label>
+                        <select class="form-control h-100 w-25" name="parent-id">
+                            {% if not topic.parent_id.name %}
+                                <option value="">Không có</option>
+                            {% else %}
+                                <option value="{{ topic.parent_id.id }}">{{ topic.parent_id.name }}</option>
+                                <option value="">Không có</option>
+                            {% endif %}
+                            {% for top in topics %}
+                                <option value="{{ top.id }}">{{ top.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        <select class="form-control h-100 w-25" name="status">
+                            {% if topic.status == 1 %}
+                                <option value="1">Xuất bản</option>
+                                <option value="2">Chưa xuất bản</option>
+                            {% else %}
+                                <option value="2">Chưa xuất bản</option>
+                                <option value="1">Xuất bản</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}

@@ -1,0 +1,105 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+	{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/regular_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/regular_responsive.css' %}">
+    <div class="container my-3 mb-5">
+
+        {% if not orders %}
+            <h4 class="text-warning text-center mb-3">Bạn không có đơn hàng nào!</h4>
+            <div class="d-flex justify-content-center mb-5">
+                <a href="{% url 'shop:all_product' %}"><button type="button" class="btn btn-success">Mua sắm ngay</button></a>
+            </div>
+        {% else %}
+            <nav class="navbar navbar-expand-lg navbar-absolute  navbar-transparent">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <a class="navbar-brand">Đơn hàng của bạn</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="content">
+                <div class="card">
+                    <div class="table">
+                        <table class="table">
+                            <thead class=" text-primary text-center">
+                                <tr>
+                                    <th>
+                                        Mã đơn hàng
+                                    </th>
+                                    <th>
+                                        Khách hàng
+                                    </th>
+                                    <th>
+                                        Địa chỉ
+                                    </th>
+                                    <th>
+                                        Phương thức thanh toán
+                                    </th>
+                                    <th>
+                                        Ngày tạo
+                                    </th>
+                                    <th>
+                                        Ngày xuất kho
+                                    </th>
+                                    <th>
+                                        Trạng thái
+                                    </th>
+                                    <th>Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                {% for order in orders %}
+                                    <tr>
+                                        <td>
+                                            {{ order.code }}
+                                        </td>
+                                        <td>
+                                            {{ order.customer.name }}
+                                        </td>
+                                        <td>
+                                            {{ order.delivery_address }}
+                                        </td>
+                                        <td>
+                                    
+                                            {% if order.payment_method == 0 %}
+                                                Thẻ tín dụng
+                                            {% else %}
+                                                Thanh toán khi nhận hàng
+                                            {% endif %}
+                                                
+                                        </td>
+                                        <td>
+                                            {{ order.created_date }}
+                                        </td>
+                                        <td>
+                                            {{ order.export_date }}
+                                        </td>
+                                        <td>
+                                            
+                                            {% if order.status == 1 %}
+                                                Chờ nhận
+                                            {% elif order.status == 2 %}
+                                                Hoàn thành
+                                            {% elif order.status == 3 %}
+                                                Đã hủy
+                                            {% endif %}
+                                                
+                                        </td>
+                                        <td>
+                                            <a class=" btn btn-sm btn-danger" href="{% url 'account:order_cancel' order.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                            <a class=" btn btn-sm btn-info" href="{% url 'account:order_item' order.id %}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+
+	{% endblock content %}

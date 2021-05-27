@@ -1,0 +1,56 @@
+{% if menu.type == "custom" %}
+    <li class="hassubs">
+        <a href="{{menu.link}}">{{ menu.name }}<i class="fas"></i></a>
+        <ul>
+            {% if menu.children %}
+                {% for child in menu.children.all %}
+                    {% with menu=child template_name="store/navbar/recursive_menus.html" %}
+                        {% include template_name %}
+                    {% endwith %}
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </li>
+{% elif menu.type == "category" %}
+    <li class="hassubs">
+        <a href="{% url 'shop:category_view' menu.link %}">{{ menu.name }}<i class="fas"></i></a>
+        <ul>
+            {% if menu.children %}
+                {% for child in menu.children.all %}
+                    {% with menu=child template_name="store/navbar/recursive_menus.html" %}
+                        {% include template_name %}
+                    {% endwith %}
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </li>
+{% elif menu.type == "topic" %}
+    <li class="hassubs">
+        <a href="{% url 'blog:topic_view' menu.link %}">{{ menu.name }}<i class="fas"></i></a>
+        <ul>
+            {% if menu.children %}
+                {% for child in menu.children.all %}
+                    {% with menu=child template_name="store/navbar/recursive_menus.html" %}
+                        {% include template_name %}
+                    {% endwith %}
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </li>
+{% elif menu.type == "page" %}
+<li class="hassubs">
+    <a href="{% url 'page_view' menu.link %}">{{ menu.name }}<i class="fas"></i></a>
+    <ul>
+        {% if menu.children %}
+            {% for child in menu.children.all %}
+                {% with menu=child template_name="store/navbar/recursive_menus.html" %}
+                    {% include template_name %}
+                {% endwith %}
+            {% endfor %}
+        {% endif %}
+    </ul>
+</li>
+{% endif %}
+
+
+

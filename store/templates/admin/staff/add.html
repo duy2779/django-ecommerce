@@ -1,0 +1,52 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Thêm nhân viên
+{% endblock title %}
+
+{% block content %}
+<form action="{% url 'admin:staff_add' %}" method="post">
+    {% csrf_token %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Thêm chủ đề</a>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-success" type="submit"><i class="fa fa-save" aria-hidden="true"></i> Thêm</button>
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:staffs' %}"><i class="fa fa-times" aria-hidden="true"></i> Thoát</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content mx-4" style="margin-top:90px;">
+        {% include 'store/messages.html' %}
+        <div class="card p-2 w-50" >
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Họ tên</label>
+                        <input type="text" name="name" class="form-control w-50" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control w-50" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tên tài khoản</label>
+                        <input type="text" name="username" class="form-control w-50" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mật khẩu</label>
+                        <input type="password" name="password" class="form-control w-50" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nhập lại mật khẩu</label>
+                        <input type="password" name="re-password" class="form-control w-50" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}

@@ -1,0 +1,96 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Sửa sản phẩm
+{% endblock title %}
+
+{% block content %}
+<form action="{% url 'admin:product_update' product.slug %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Sửa sản phẩm</a>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-success" type="submit"><i class="fa fa-save" aria-hidden="true"></i> Lưu</button>
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:products' %}"><i class="fa fa-times" aria-hidden="true"></i> Thoát</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content mx-4" style="margin-top:90px;">
+        {% include 'store/messages.html' %}
+        <div class="card p-2" >
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label>Tên sản phẩm</label>
+                        <input type="text" name="name" class="form-control w-50" value="{{ product.name }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea class="form-control" name="description" value="aaaaa" rows="3">{{ product.description }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Chi tiết</label>
+                        <textarea class="form-control h-100" name="detail" rows="3" style="min-height:290px;">{{ product.detail }}</textarea>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Số lượng</label>
+                        <input type="number" name="number" class="form-control w-50" min="1" value="{{ product.number }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Giá</label>
+                        <input type="number" name="price" class="form-control w-50" min="100000" value="{{ product.price }}" step="100000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Giá khuyến mãi</label>
+                        <input type="number" name="price-sale" class="form-control w-50" step="100000" value="{{ product.price_sale }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Loại sản phẩm</label>
+                        <select class="form-control" name="category">
+                            <option value="{{ product.category.id }}">{{ product.category.name }}</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Sản phẩm nổi bật</label>
+                        <select class="form-control h-100" name="featured">
+                            {% if product.featured == 0 %}
+                                <option value="0">Tắt</option>
+                                <option value="1">Bật</option>
+                            {% else %}
+                                <option value="1">Bật</option>
+                                <option value="0">Tắt</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        <select class="form-control h-100" name="status">
+                            {% if product.status == 1 %}
+                                <option value="1">Xuất bản</option>
+                                <option value="2">Chưa xuất bản</option>
+                            {% else %}
+                                <option value="2">Chưa xuất bản</option>
+                                <option value="1">Xuất bản</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ảnh</label>
+                        <img class="mb-3" style="max-width:300px;" src="{{ product.imageURL }}" />
+                        <input name="image" type="file" id="file" size="40" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}

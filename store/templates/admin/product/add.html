@@ -1,0 +1,84 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Thêm sản phẩm
+{% endblock title %}
+
+{% block content %}
+<form action="{% url 'admin:product_add' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Thêm sản phẩm</a>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-success" type="submit"><i class="fa fa-save" aria-hidden="true"></i> Thêm</button>
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:products' %}"><i class="fa fa-times" aria-hidden="true"></i> Thoát</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content mx-4" style="margin-top:90px;">
+        {% include 'store/messages.html' %}
+        <div class="card p-2" >
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label>Tên sản phẩm</label>
+                        <input type="text" name="name" class="form-control w-50" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea class="form-control" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Chi tiết</label>
+                        <textarea class="form-control h-100" name="detail" rows="3" style="min-height:290px;"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Số lượng</label>
+                        <input type="number" name="number" class="form-control w-50" min="1" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Giá</label>
+                        <input type="number" name="price" class="form-control w-50" min="100000" value="100000" step="100000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Giá khuyến mãi</label>
+                        <input type="number" name="price-sale" class="form-control w-50" step="100000" >
+                    </div>
+                    <div class="form-group">
+                        <label>Loại sản phẩm</label>
+                        <select class="form-control" name="category">
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Sản phẩm nổi bật</label>
+                        <select class="form-control h-100" name="featured">
+                            <option value="0">Tắt</option>
+                            <option value="1">Bật</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        <select class="form-control h-100" name="status">
+                            <option value="2">Chưa xuất bản</option>
+                            <option value="1">Xuất bản</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ảnh</label>
+                        <input name="image" type="file" id="file" size="40" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}

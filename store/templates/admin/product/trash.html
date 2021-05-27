@@ -1,0 +1,73 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Thùng rác sản phẩm
+{% endblock title %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Quản lí thùng rác sản phẩm</a>
+            </div>
+            <div>
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:products' %}"><i class="fa fa-times" aria-hidden="true"></i> Thoát</a>
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        {% include 'store/messages.html' %}
+        <div class="card">
+            <div class="table">
+                <table class="table">
+                    <thead class=" text-primary text-center">
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tên sản phẩm
+                            </th>
+                            <th>
+                                Hình ảnh
+                            </th>
+                            <th>
+                                Ngày tạo
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for product in products %}
+                            <tr>
+                                <td>
+                                    {{ product.id }}
+                                </td>
+                                <td>
+                                    {{ product.name }}
+                                </td>
+                                <td>
+                                    <img style="width:100px;" src="{{ product.imageURL }}" />
+                                </td>
+                                <td>
+                                    {{ product.created_at }}
+                                </td>
+                                <td>
+                                    Thùng rác
+                                </td>
+                                <td>
+                                    <a class=" btn btn-sm btn-success" href="{% url 'admin:product_retrash' product.id %}"><i class="fa fa-recycle" aria-hidden="true"></i></a>
+                                    <a class=" btn btn-sm btn-danger" href="{% url 'admin:product_delete' product.slug %}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

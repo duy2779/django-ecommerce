@@ -1,0 +1,127 @@
+{% extends 'admin/base/base.html' %}
+
+{% block title %}
+    Bảng điều khiển
+{% endblock title %}
+    
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+    <div class="container-fluid">
+        <div class="navbar-wrapper">
+            <a class="navbar-brand">Bảng điều khiển</a>
+        </div>
+        <div>
+            <a class=" btn btn-sm btn-danger" href="{% url 'admin:logout'%}"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+        </div>
+    </div>
+</nav>
+<div class="content">
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-body ">
+              <div class="row">
+                <div class="col-5 col-md-4">
+                  <div class="icon-big text-center icon-warning">
+                    <i class="fa fa-cube text-warning" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="col-7 col-md-8">
+                  <div class="numbers">
+                    <p class="card-category">Tổng lượng sản phẩm</p>
+                    <p class="card-title">{{ product_total }}</p><p>
+                  </p></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer ">
+              <hr>
+              <div class="stats">
+                <i class="fa fa-refresh"></i>
+                Cập nhật ngay
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-body ">
+              <div class="row">
+                <div class="col-5 col-md-4">
+                  <div class="icon-big text-center icon-warning">
+                    <i class="fa fa-product-hunt text-success" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="col-7 col-md-8">
+                  <div class="numbers">
+                    <p class="card-category">Tổng sản phẩm bán ra</p>
+                    <p class="card-title">{{ quantity_total }}</p><p>
+                  </p></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer ">
+              <hr>
+              <div class="stats">
+                <i class="fa fa-refresh"></i>
+                Cập nhật ngay
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-body ">
+              <div class="row">
+                <div class="col-5 col-md-4">
+                  <div class="icon-big text-center icon-warning">
+                    <i class="fa fa-flag text-danger" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="col-7 col-md-8">
+                  <div class="numbers">
+                    <p class="card-category">Đơn hàng đang chờ</p>
+                    <p class="card-title">{{ orders_not_checked }}</p><p>
+                  </p></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer ">
+              <hr>
+              <div class="stats">
+                <i class="fa fa-refresh"></i>
+                Cập nhật ngay
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-body ">
+              <div class="row">
+                <div class="col-5 col-md-4">
+                  <div class="icon-big text-center icon-warning">
+                    <i class="fa fa-user text-primary" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="col-7 col-md-8">
+                  <div class="numbers">
+                    <p class="card-category">Thành viên</p>
+                    <p class="card-title">{{ members }}</p><p>
+                  </p></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer ">
+              <hr>
+              <div class="stats">
+                <i class="fa fa-refresh"></i>
+                Cập nhật ngay
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

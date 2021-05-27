@@ -1,0 +1,81 @@
+{% extends 'admin/base/base.html' %}
+{% load humanize %}
+
+{% block title %}
+    Đơn hàng
+{% endblock title %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand">Quản lí Đơn Hàng</a>
+            </div>
+            <div>
+                
+                {% if order.status == 1%}
+                    <a class=" btn btn-sm btn-success" href="{% url 'admin:order_status' order.id %}"><i class="fa fa-check" aria-hidden="true"></i> Hoàn thành đơn hàng</a>
+                {% else %}
+                    <a class=" btn btn-sm btn-warning" href="{% url 'admin:order_status' order.id %}"><i class="fa fa-times" aria-hidden="true"></i> Chuyển về chờ nhận</a>
+                {% endif %}
+                    
+                
+                <a class=" btn btn-sm btn-danger" href="{% url 'admin:orders' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Thoát</a>
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        {% include 'store/messages.html' %}
+        <div class="card">
+            <div class="table">
+                <table class="table">
+                    <thead class=" text-primary text-center">
+                        <tr>
+                            <th>
+                                Sản phẩm
+                            </th>
+                            <th>
+                                Ảnh
+                            </th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                Giá tiền
+                            </th>
+                            <th>
+                                Tổng tiền
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for item in items %}
+                            <tr>
+                                <td>
+                                    {{ item.product.name }}
+                                </td>
+                                <td>
+                                    <img style="width:100px;" src="{{ item.product.imageURL }}" />
+                                </td>
+                                <td>
+                                    {{ item.quantity }}
+                                </td>
+                                <td>
+                                    {{ item.product.price | intcomma }}<sup>đ</sup>
+                                </td>
+                                <td>
+                                    {{ item.get_total | intcomma }}<sup>đ</sup>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="pull-right mr-1">
+            <h6>Tổng tiền: {{ order.get_cart_total | intcomma }}<sup>đ</sup></h6>
+        </div>
+    </div>
+    
+    
+{% endblock content %}
