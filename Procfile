@@ -1,0 +1,1 @@
+web gunicorn dmobile.wsgi:application --log-file -
